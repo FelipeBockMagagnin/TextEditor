@@ -38,9 +38,16 @@ public class Panel extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                SaveBeforeClose(evt);
+            }
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                SaveBeforeClose(evt);
+            }
+        });
 
         jScrollPane1.setViewportView(jEditorPane1);
 
@@ -80,9 +87,6 @@ public class Panel extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Edit");
-        jMenuBar1.add(jMenu2);
-
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -115,6 +119,10 @@ public class Panel extends javax.swing.JFrame {
         editor.NewArchive(jEditorPane1);
         
     }//GEN-LAST:event_NewButton
+
+    private void SaveBeforeClose(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_SaveBeforeClose
+        editor.SaveArchive(jEditorPane1);
+    }//GEN-LAST:event_SaveBeforeClose
 
     /**
      * @param args the command line arguments
@@ -154,7 +162,6 @@ public class Panel extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JEditorPane jEditorPane1;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;

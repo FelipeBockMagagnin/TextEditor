@@ -38,7 +38,7 @@ public class EditorLogic {
             else 
             {
                 System.out.println("File file.txt already exists in the project root directory");
-                EditorPanel.setEnabled(false);
+                EditorPanel.setEnabled(true);
             }           
         } 
         catch (IOException ex) 
@@ -48,21 +48,30 @@ public class EditorLogic {
     }
     
     public void SaveArchive(JEditorPane EditorPanel){
-        try {
-            archive = new PrintWriter(actualFile.getName());
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(EditorLogic.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        archive.print(EditorPanel.getText());
-        archive.flush();  
-        System.out.println("Archive Saved");
+        JFileChooser fileChooser = new JFileChooser();
+        if (fileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+            
+            File directory = fileChooser.getSelectedFile();
+            String path = directory.getAbsolutePath();
+            System.out.println("Path: " + path);
+            File f = new File(path + ".txt");
+            
+            try {
+                archive = new PrintWriter(path + ".txt");
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(EditorLogic.class.getName()).log(Level.SEVERE, null, ex);
+            }
+         
+            archive.print(EditorPanel.getText());
+            archive.flush();  
+            System.out.println("Archive Saved");
+        }          
+        actualFile.delete();
     }
     
     public void OpenArchive(JEditorPane EditorPanel){
         JFileChooser chooser = new JFileChooser();
-        int returnVal = chooser.showOpenDialog(null);
-        if(returnVal == JFileChooser.APPROVE_OPTION) {
+        if(chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
             System.out.println("You chose to open this file: " +
                     chooser.getSelectedFile().getName());
         }
